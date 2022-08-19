@@ -1,6 +1,8 @@
 export class Product {
 
-    constructor (public ski:string,
+    constructor (
+        public id:number,
+        public ski:string,
         public name:string,
         public description:string,
         public unitPrice:number,
