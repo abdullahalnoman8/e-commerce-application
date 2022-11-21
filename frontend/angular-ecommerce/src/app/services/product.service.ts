@@ -80,6 +80,24 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(searchUrl);
     
    }
+
+   /** 
+   * Get all the products that will contain pagination information
+   * **/
+  searchProductListPaginate(
+    thePage:number,
+    thePageSize:number,
+    thekeyword: string  
+    ):Observable<GetResponseProducts>{
+      // need to build URL based on the search keyword 
+      const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${thekeyword}`+
+      `&page=${thePage}&size=${thePageSize}`;
+  
+      console.log('search URL: '+ searchUrl)
+      
+      return this.httpClient.get<GetResponseProducts>(searchUrl);
+      
+     }
 }
 
 interface GetResponseProducts{

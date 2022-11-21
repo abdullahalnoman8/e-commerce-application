@@ -20,6 +20,7 @@ export class ProductListComponent implements OnInit {
   thePageSize: number = 5;
   theTotalElements: number = 1;
   previousCategoryId: number;
+  previousKeyword: string = '';
 
   constructor(
     private productService: ProductService,
@@ -45,12 +46,24 @@ export class ProductListComponent implements OnInit {
   * This method will take care of search product 
   **/
   handleSearchProducts() {
-    const thekeyword: string = this.route.snapshot.paramMap.get('keyword');
+    const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
+
+    // if we hae a different keyword than previous then set thePageNumber to 1
+
+    if (this.previousKeyword != theKeyword) {
+      this.thePageNumber = 1;
+    }
+
+    this.previousKeyword = theKeyword;
 
     // new search for the products using keyword
-    this.productService.searchProducts(thekeyword).subscribe((data) => {
-      this.products = data;
-    });
+    this.productService
+      .searchProductListPaginate(
+        this.thePageNumber - 1,
+        this.thePageSize,
+        theKeyword
+      )
+      .subscribe(this.processResult());
   }
 
   
@@ -106,5 +119,16 @@ export class ProductListComponent implements OnInit {
     this.thePageSize = +pageSize;
     this.thePageNumber = 1;
     this.listProducts();
+  }
+/*
+* This method for get result of pagination api 
+*/
+  processResult() {
+    return (data: any) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
   }
 }
