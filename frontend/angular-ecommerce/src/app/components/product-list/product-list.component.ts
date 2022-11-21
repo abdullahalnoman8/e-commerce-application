@@ -98,4 +98,13 @@ export class ProductListComponent implements OnInit {
         this.theTotalElements = data.page.totalElements;
       });
   }
+
+  /*
+  ** This method will update the page size for pagination by user input 
+  */
+  updatePageSize(pageSize: string) {
+    this.thePageSize = +pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
+  }
 }
