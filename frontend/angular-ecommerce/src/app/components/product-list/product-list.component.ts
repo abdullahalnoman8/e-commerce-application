@@ -46,7 +46,7 @@ export class ProductListComponent implements OnInit {
   }
 
   /**
-  * This method will take care of search product 
+  * This method will take care of search product
   **/
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
@@ -69,8 +69,8 @@ export class ProductListComponent implements OnInit {
       .subscribe(this.processResult());
   }
 
-  
-  /* 
+
+  /*
    * This method return list of products by category id
    */
   handleListProducts() {
@@ -85,8 +85,8 @@ export class ProductListComponent implements OnInit {
     }
 
     //
-    // Check if we have a differnet category than previous
-    // Note: Angular will reuse a component if it is courrently being viewed
+    // Check if we have a different category than previous
+    // Note: Angular will reuse a component if it is currently being viewed
     //
 
     // if we have a different category id than previous
@@ -116,7 +116,7 @@ export class ProductListComponent implements OnInit {
   }
 
   /*
-  ** This method will update the page size for pagination by user input 
+  ** This method will update the page size for pagination by user input
   */
   updatePageSize(pageSize: string) {
     this.thePageSize = +pageSize;
@@ -124,7 +124,7 @@ export class ProductListComponent implements OnInit {
     this.listProducts();
   }
 /*
-* This method for get result of pagination api 
+* This method for get result of pagination api
 */
   processResult() {
     return (data: any) => {
@@ -134,13 +134,14 @@ export class ProductListComponent implements OnInit {
       this.theTotalElements = data.page.totalElements;
     };
   }
-  /* 
-  * Add to cart 
+  /*
+  * Add to cart
   */
  addToCart(theProduct: Product){
   console.log(`Adding to cart: ${theProduct.name}`);
   const theCartItem = new CartItem(theProduct);
+  console.log(`The cart item to add: `,theCartItem);
   this.cartService.addToCart(theCartItem);
-  
+
  }
 }
