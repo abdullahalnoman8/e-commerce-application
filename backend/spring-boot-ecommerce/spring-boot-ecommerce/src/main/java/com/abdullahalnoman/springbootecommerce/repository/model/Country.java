@@ -7,6 +7,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Country Entity Class that helps to do persistence operation of Country
+ *
+**/
 @Entity
 @Table(name = "country")
 @Getter

@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3307:3306
+    volumes:
+      #- ./mysql-data:/var/lib/mysql
+      #- ./db:/docker-entrypoint-initdb.d
+      #- ./db/script.sql:/docker-entrypoint-initdb.d/script.sql
+      #- ./db/01-create-user.sql:/docker-entrypoint-initdb.d/01-create-user.sql
+      - ./db/create-products.sql:/docker-entrypoint-initdb.d/create-products.sql
+      #- ./db/countries-and-states.sql:/docker-entrypoint-initdb.d/countries-and-states.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: full-stack-ecommerce
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root123
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/full-stack-ecommerce
+      SPRING_DATASOURCE_USERNAME: ecommerceapp
+      SPRING_DATASOURCE_PASSWORD: ecommerceapp
